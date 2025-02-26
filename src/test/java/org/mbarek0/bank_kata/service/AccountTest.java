@@ -50,6 +50,8 @@ class AccountTest {
     @Test
     void withdraw_shouldStoreTransaction() {
         // Arrange
+        int initialDeposit = 100;
+        when(transactionRepository.getBalance()).thenReturn(initialDeposit);
         int withdrawAmount = 50;
 
         // Act
@@ -127,9 +129,7 @@ class AccountTest {
         int initialDeposit = 100;
         int withdrawAmount = 150;
 
-        when(clock.today()).thenReturn(LocalDate.of(2025, 2, 26));
-
-        account.deposit(initialDeposit);
+        when(transactionRepository.getBalance()).thenReturn(initialDeposit);
 
         // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> account.withdraw(withdrawAmount));
@@ -140,4 +140,5 @@ class AccountTest {
         // Verify that no transaction was recorded
         verify(transactionRepository, never()).addTransaction(anyInt());
     }
+
 }
