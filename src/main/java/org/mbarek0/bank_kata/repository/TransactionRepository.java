@@ -18,9 +18,15 @@ public class TransactionRepository {
         this.clock = clock;
     }
 
-    public void addTransaction(int amount) {}
+    public void addTransaction(int amount) {
+        if (amount == 0) {
+            throw new IllegalArgumentException(INVALID_AMOUNT_ERROR);
+        }
+        balance += amount;
+        transactions.add(new Transaction(amount, clock.today(), balance));
+    }
 
     public List<Transaction> getAllTransactions() {
-        return null;
+        return transactions;
     }
 }
