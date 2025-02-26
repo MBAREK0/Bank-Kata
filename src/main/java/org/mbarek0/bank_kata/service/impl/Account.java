@@ -12,6 +12,7 @@ import java.util.List;
 public class Account implements AccountService {
 
     public static final String INVALID_AMOUNT_ERROR = "Amount cannot be zero or negative";
+    public static final String INSUFFICIENT_FUNDS_ERROR = "Insufficient funds";
 
     private final TransactionRepository transactionRepository;
     private final StatementPrinter statementPrinter;
@@ -26,6 +27,7 @@ public class Account implements AccountService {
     @Override
     public void withdraw(int amount) {
         validateAmount(amount);
+        validateBalance(amount);
         transactionRepository.addTransaction(-amount);
     }
 
@@ -45,6 +47,13 @@ public class Account implements AccountService {
     public void validateAmount(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException(INVALID_AMOUNT_ERROR);
+        }
+    }
+
+    // helper method to validate balance
+    public void validateBalance(int amount) {
+        if (amount > transactionRepository.getBalance()) {
+            throw new IllegalArgumentException(INSUFFICIENT_FUNDS_ERROR);
         }
     }
 }
