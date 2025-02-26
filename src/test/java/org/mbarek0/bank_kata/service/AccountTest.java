@@ -1,6 +1,7 @@
 package org.mbarek0.bank_kata.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mbarek0.bank_kata.entity.Transaction;
 import org.mbarek0.bank_kata.outil.Clock;
@@ -31,6 +32,7 @@ class AccountTest {
         account = new Account(transactionRepository, statementPrinter);
     }
 
+    @DisplayName("Deposit should store transaction")
     @Test
     void deposit_shouldStoreTransaction() {
 
@@ -47,6 +49,7 @@ class AccountTest {
         verify(transactionRepository).addTransaction(depositAmount);
     }
 
+    @DisplayName("Withdraw should store transaction")
     @Test
     void withdraw_shouldStoreTransaction() {
         // Arrange
@@ -62,6 +65,7 @@ class AccountTest {
     }
 
 
+    @DisplayName("Deposit should throw exception when amount is zero")
     @Test
     void deposit_shouldThrowException_whenAmountIsZero() {
 
@@ -75,6 +79,7 @@ class AccountTest {
         assertEquals(Account.INVALID_AMOUNT_ERROR, exception.getMessage());
     }
 
+    @DisplayName("Deposit should throw exception when amount is negative")
     @Test
     void deposit_shouldThrowException_whenAmountIsNegative() {
 
@@ -88,6 +93,7 @@ class AccountTest {
         assertEquals(Account.INVALID_AMOUNT_ERROR, exception.getMessage());
     }
 
+    @DisplayName("Withdraw should throw exception when amount is negative")
     @Test
     void withdraw_shouldThrowException_whenAmountIsNegative() {
 
@@ -101,7 +107,26 @@ class AccountTest {
         assertEquals(Account.INVALID_AMOUNT_ERROR, exception.getMessage());
     }
 
+    @DisplayName("Withdraw should throw exception when insufficient funds")
+    @Test
+    void withdraw_shouldThrowException_whenInsufficientFunds() {
+        // Arrange
+        int initialDeposit = 100;
+        int withdrawAmount = 150;
 
+        when(transactionRepository.getBalance()).thenReturn(initialDeposit);
+
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> account.withdraw(withdrawAmount));
+
+        // Assert
+        assertEquals(Account.INSUFFICIENT_FUNDS_ERROR, exception.getMessage());
+
+        // Verify that no transaction was recorded
+        verify(transactionRepository, never()).addTransaction(anyInt());
+    }
+
+    @DisplayName("Print statement should call statement printer")
     @Test
     void printStatement_shouldCallStatementPrinter() {
 
@@ -121,24 +146,6 @@ class AccountTest {
 
         // Assert
         verify(statementPrinter).print(transactions);
-    }
-
-    @Test
-    void withdraw_shouldThrowException_whenInsufficientFunds() {
-        // Arrange
-        int initialDeposit = 100;
-        int withdrawAmount = 150;
-
-        when(transactionRepository.getBalance()).thenReturn(initialDeposit);
-
-        // Act & Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> account.withdraw(withdrawAmount));
-
-        // Assert
-        assertEquals(Account.INSUFFICIENT_FUNDS_ERROR, exception.getMessage());
-
-        // Verify that no transaction was recorded
-        verify(transactionRepository, never()).addTransaction(anyInt());
     }
 
 }
