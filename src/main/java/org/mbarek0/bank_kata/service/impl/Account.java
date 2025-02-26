@@ -18,14 +18,24 @@ public class Account implements AccountService {
 
     @Override
     public void deposit(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(INVALID_AMOUNT_ERROR);
+        }
+        transactionRepository.addTransaction(amount);
 
     }
 
     @Override
     public void withdraw(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(INVALID_AMOUNT_ERROR);
+        }
+        transactionRepository.addTransaction(-amount);
     }
 
     @Override
     public void printStatement() {
+        List<Transaction> transactions = transactionRepository.getAllTransactions();
+        statementPrinter.print(transactions);
     }
 }
