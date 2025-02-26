@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionRepository {
+
+    public static final String INVALID_AMOUNT_ERROR = "Amount cannot be zero";
+
     private final List<Transaction> transactions = new ArrayList<>();
     private final Clock clock;
     private int balance;
@@ -15,11 +18,7 @@ public class TransactionRepository {
         this.clock = clock;
     }
 
-    public void addTransaction(int amount) {
+    public void addTransaction(int amount) {}
 
-    }
-
-    public List<Transaction> getAllTransactions() {
-       return null;
-    }
+    public List<Transaction> getAllTransactions() {}
 }
