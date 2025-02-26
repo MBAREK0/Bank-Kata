@@ -1,5 +1,6 @@
 package org.mbarek0.bank_kata.repository;
 
+import lombok.Getter;
 import org.mbarek0.bank_kata.entity.Transaction;
 import org.mbarek0.bank_kata.outil.Clock;
 
@@ -12,6 +13,7 @@ public class TransactionRepository {
 
     private final List<Transaction> transactions = new ArrayList<>();
     private final Clock clock;
+    @Getter
     private int balance;
 
     public TransactionRepository(Clock clock) {
@@ -29,4 +31,6 @@ public class TransactionRepository {
     public List<Transaction> getAllTransactions() {
         return transactions;
     }
+
+
 }
