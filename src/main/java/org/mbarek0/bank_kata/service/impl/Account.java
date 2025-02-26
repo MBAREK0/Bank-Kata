@@ -10,6 +10,9 @@ import java.util.List;
 
 @AllArgsConstructor
 public class Account implements AccountService {
+
+    public static final String INVALID_AMOUNT_ERROR = "Amount cannot be zero or negative";
+
     private final TransactionRepository transactionRepository;
     private final StatementPrinter statementPrinter;
 

@@ -20,5 +20,7 @@ public class TransactionRepository {
 
     public void addTransaction(int amount) {}
 
-    public List<Transaction> getAllTransactions() {}
+    public List<Transaction> getAllTransactions() {
+        return null;
+    }
 }
