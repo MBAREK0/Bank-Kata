@@ -13,7 +13,6 @@ public class TransactionRepository {
 
     private final List<Transaction> transactions = new ArrayList<>();
     private final Clock clock;
-    @Getter
     private int balance;
 
     public TransactionRepository(Clock clock) {
@@ -32,5 +31,8 @@ public class TransactionRepository {
         return transactions;
     }
 
-
+    // helper method to get balance
+    public int getBalance() {
+        return transactions.stream().mapToInt(Transaction::amount).sum();
+    }
 }
