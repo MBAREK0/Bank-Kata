@@ -120,4 +120,24 @@ class AccountTest {
         // Assert
         verify(statementPrinter).print(transactions);
     }
+
+    @Test
+    void withdraw_shouldThrowException_whenInsufficientFunds() {
+        // Arrange
+        int initialDeposit = 100;
+        int withdrawAmount = 150;
+
+        when(clock.today()).thenReturn(LocalDate.of(2025, 2, 26));
+
+        account.deposit(initialDeposit);
+
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> account.withdraw(withdrawAmount));
+
+        // Assert
+        assertEquals(Account.INSUFFICIENT_FUNDS_ERROR, exception.getMessage());
+
+        // Verify that no transaction was recorded
+        verify(transactionRepository, never()).addTransaction(anyInt());
+    }
 }
