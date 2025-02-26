@@ -1,6 +1,7 @@
 package org.mbarek0.bank_kata.repository;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mbarek0.bank_kata.entity.Transaction;
 import org.mbarek0.bank_kata.outil.Clock;
@@ -23,6 +24,7 @@ class TransactionRepositoryTest {
         transactionRepository = new TransactionRepository(clock);
     }
 
+    @DisplayName("Should add transaction with current date")
     @Test
     void shouldAddTransactionWithCurrentDate() {
         LocalDate fixedDate = LocalDate.of(2024, 2, 25);
@@ -41,6 +43,7 @@ class TransactionRepositoryTest {
         verify(clock, times(1)).today();
     }
 
+    @DisplayName("Should store multiple transactions")
     @Test
     void shouldStoreMultipleTransactions() {
 
@@ -69,6 +72,7 @@ class TransactionRepositoryTest {
 
     }
 
+    @DisplayName("Should return empty list when no transaction")
     @Test
     void shouldReturnEmptyListWhenNoTransaction() {
         List<Transaction> transactions = transactionRepository.getAllTransactions();
@@ -78,6 +82,7 @@ class TransactionRepositoryTest {
         verify(clock, never()).today();
     }
 
+    @DisplayName("Should throw exception when amount is zero")
     @Test
     void shouldThrowExceptionWhenAmountIsZero() {
         IllegalArgumentException exception =
@@ -88,6 +93,7 @@ class TransactionRepositoryTest {
         assertEquals(TransactionRepository.INVALID_AMOUNT_ERROR, exception.getMessage());
     }
 
+    @DisplayName("Should throw exception when amount is zero after multiple transactions")
     @Test
     void shouldThrowExceptionWhenAmountIsZeroAfterMultipleTransactions() {
         transactionRepository.addTransaction(1000);
