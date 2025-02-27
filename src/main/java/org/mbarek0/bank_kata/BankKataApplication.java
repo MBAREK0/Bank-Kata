@@ -21,8 +21,6 @@ public class BankKataApplication {
         account.deposit(2000);
         account.withdraw(500);
         account.printStatement();
-
-       // SpringApplication.run(BankKataApplication.class, args);
     }
 
 }

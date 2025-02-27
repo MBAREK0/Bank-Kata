@@ -1,6 +1,5 @@
 package org.mbarek0.bank_kata.repository;
 
-import lombok.Getter;
 import org.mbarek0.bank_kata.entity.Transaction;
 import org.mbarek0.bank_kata.outil.Clock;
 

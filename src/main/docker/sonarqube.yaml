@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonarqube
+      - SONAR_JDBC_USERNAME=sonarqube
+      - SONAR_JDBC_PASSWORD=sonarqube
+    depends_on:
+      - db
+    networks:
+      - shared-network
+
+  db:
+    image: postgres:latest
+    container_name: sonarqube_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=sonarqube
+      - POSTGRES_PASSWORD=sonarqube
+      - POSTGRES_DB=sonarqube
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    driver: bridge

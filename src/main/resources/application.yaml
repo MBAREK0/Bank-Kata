@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: bank-kata
+  sonar:
+    projectKey: test-technique
+    projectName: Technical Test
+    host:
+      url: "http://localhost:9000"
+    login: "YOUR_SONARQUBE_TOKEN"
+    coverage:
+      jacoco:
+        xmlReportPaths: "target/site/jacoco/jacoco.xml"
+server:
+  port: 8080

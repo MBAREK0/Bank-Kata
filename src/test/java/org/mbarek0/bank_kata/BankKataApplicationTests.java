@@ -8,6 +8,7 @@ class BankKataApplicationTests {
 
     @Test
     void contextLoads() {
+        // Test the context
     }
 
 }
